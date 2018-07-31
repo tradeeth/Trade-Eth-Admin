@@ -44,7 +44,7 @@ export default async function sequelize() {
   }
 
   console.log('Running migrations...')
-  const umzug = new Umzug({
+  const migrations = new Umzug({
     storage: "sequelize",
 
     storageOptions: {
@@ -60,9 +60,30 @@ export default async function sequelize() {
     }
   });
 
-  await umzug.up();
+  await migrations.up();
 
   console.log('Migrations executed successfully');
+
+  console.log('Running seeders...')
+  const seeders = new Umzug({
+    storage: "sequelize",
+
+    storageOptions: {
+      sequelize: sequelize
+    },
+
+    migrations: {
+      params: [
+        sequelize.getQueryInterface(),
+        Sequelize
+      ],
+      path: path.join(__dirname, "../seeders")
+    }
+  });
+
+  await seeders.up();
+
+  console.log('Seeders executed successfully');
 
   return {
     sequelize,
