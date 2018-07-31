@@ -1,0 +1,28 @@
+version: "3"
+services:
+  backend:
+    build: .
+    command: sh -c "yarn run dev"
+    image: nodefactory/trade-eth-admin:${IMAGE_TAG:-latest}
+    container_name: "${BACKEND_CONTAINER_NAME:-backend}"
+    depends_on:
+      - db
+    volumes:
+          - .:/usr/app
+          - node_modules:/usr/app/node_modules
+    ports:
+          - "${BACKEND_EXPOSED_PORT:-3000}:3000"
+          - "${DEBUG_EXPOSED_PORT:-56745}:56745"
+  db:
+    image: postgres:9.6-alpine
+    volumes:
+      - ./.postgres:/var/lib/postgresql/data
+    environment:
+      - POSTGRES_USER=${DB_USER:-tradeth}
+      - POSTGRES_PASSWORD=${DB_PASSWORD:-tradeth}
+      - POSTGRES_DB=${DB_NAME:-tradeth}
+    ports:
+      - ${DB_EXPOSED_PORT:-9999}:5432
+volumes:
+  node_modules:
+

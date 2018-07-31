@@ -1,0 +1,53 @@
+{
+  "name": "trade-eth-admin",
+  "description": "",
+  "version": "1.0.0",
+  "contributors": [
+    "Marin Petrunić <marin@nodefactory.io>",
+    "Belma gutlić <belma@nodefactory.io"
+  ],
+  "license": "MIT",
+  "scripts": {
+    "init": "mkdir build",
+    "clean": "rm -rf build",
+    "prebuild": "npm run clean && npm run init",
+    "build": "babel ./src --source-maps --out-dir ./build",
+    "dev": "nodemon --inspect=0.0.0.0:56745 -r dotenv/config -r babel-register src/server.es6",
+    "preprod": "npm run build",
+    "prod": "node -r dotenv/config -r babel-register build/server.js",
+    "pretest": "eslint --ignore-path .gitignore .",
+    "test": "babel-tape-runner \"test/**/*.es6\" | tap-spec",
+    "lint": "eslint --ignore-path .gitignore ."
+  },
+  "dependencies": {
+    "axios": "^0.18.0",
+    "body-parser": "^1.18.3",
+    "dotenv": "^5.0.1",
+    "express": "^4.16.3",
+    "morgan": "^1.9.0",
+    "nodemon": "^1.17.4",
+    "pg": "^7.4.3",
+    "sequelize": "^4.38.0",
+    "winston": "^3.0.0"
+  },
+  "devDependencies": {
+    "axios-mock-adapter": "^1.15.0",
+    "babel-cli": "^6.26.0",
+    "babel-core": "^6.26.3",
+    "babel-eslint": "^8.2.3",
+    "babel-preset-env": "^1.7.0",
+    "babel-register": "^6.26.0",
+    "babel-runtime": "^6.26.0",
+    "babel-tape-runner": "^2.0.1",
+    "eslint": "^4.19.1",
+    "eslint-config-strongloop": "^2.1.0",
+    "runjs": "^4.3.2",
+    "tap-spec": "^5.0.0",
+    "tape": "^4.9.1"
+  },
+  "babel": {
+    "presets": [
+      "env"
+    ]
+  }
+}
