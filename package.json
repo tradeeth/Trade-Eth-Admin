@@ -28,6 +28,7 @@
     "nodemon": "^1.17.4",
     "pg": "^7.4.3",
     "sequelize": "^4.38.0",
+    "umzug": "^2.1.0",
     "winston": "^3.0.0"
   },
   "devDependencies": {

@@ -1,5 +1,7 @@
 import config from './config';
 import Sequelize from 'sequelize';
+import Umzug from 'umzug';
+import path from 'path';
 
 export default async function sequelize() {
   const sequelize = new Sequelize(
@@ -41,14 +43,26 @@ export default async function sequelize() {
     }
   }
 
-  const migrator = sequelize.getMigrator({path: process.cwd() + "/migrations" }, true)
-  migrator.migrate().success(function(){
-    console.log("migrations complete");
-  }).error(function(err){
-    console.log("error migrating DB: ");
-    throw err;
-    process.exit();
+  console.log('Running migrations...')
+  const umzug = new Umzug({
+    storage: "sequelize",
+
+    storageOptions: {
+      sequelize: sequelize
+    },
+
+    migrations: {
+      params: [
+        sequelize.getQueryInterface(),
+        Sequelize
+      ],
+      path: path.join(__dirname, "../migrations")
+    }
   });
+
+  await umzug.up();
+
+  console.log('Migrations executed successfully');
 
   return {
     sequelize,
