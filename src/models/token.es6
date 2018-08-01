@@ -1,7 +1,10 @@
-'use strict';
-module.exports = (sequelize, DataTypes) => {
-  var Token = sequelize.define('Token', {
-    id: DataTypes.INTEGER,
+export default function (sequelize, DataTypes) {
+  const Token = sequelize.define('Token', {
+    id: {
+      type: DataTypes.INTEGER,
+      autoIncrement: true,
+      primaryKey: true
+    },
     addr: DataTypes.STRING,
     name: DataTypes.STRING,
     fullName: DataTypes.STRING,
