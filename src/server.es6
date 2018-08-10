@@ -2,7 +2,7 @@ import express from 'express';
 import config from './config/config';
 import logger from './functions/logger';
 import api from './routes/basic';
-import sequelize from './config/dbconfig';
+import configureSequelize from './config/dbconfig';
 import configureExpress from './config/express.config';
 
 // const passport = require('passport');
@@ -15,15 +15,16 @@ app.get('/', function(req, res) {
 
 configureExpress(app);
 
-app.use('/api', api);
+app.use('/api', api());
 
-sequelize();
+configureSequelize().then(() => {
 
-const date = new Date().toISOString().replace(/T/, ' ').replace(/\..+/, '');
+  const date = new Date().toISOString().replace(/T/, ' ').replace(/\..+/, '');
 // Start the server
-app.listen(config.port);
+  app.listen(config.port);
 
-logger.info(
-  `${config.appName} serving on ${config.hostname}:${config.port}`
-);
-logger.info(`Server start ${date}`);
+  logger.info(
+    `${config.appName} serving on ${config.hostname}:${config.port}`
+  );
+  logger.info(`Server start ${date}`);
+});

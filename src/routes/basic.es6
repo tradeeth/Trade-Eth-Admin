@@ -1,23 +1,13 @@
-import { Router } from 'express';
-import logger from '../functions/logger';
-
+import { Router } from 'express'
+import TokenController from '../controllers/token-controller'
+import ConfigController from '../controllers/config-controller'
 
 const api = Router();
 
-api.get('/test', async function(req, res) {
+api.get('/tokens', TokenController.list);
 
-  let ipOrigin = req.ip;
-  if (!ipOrigin) {
-    ipOrigin = 'unknown';
-  }
+api.get('/config/main', ConfigController.main);
 
-  logger.info(ipOrigin);
-
-  return res.json({
-    success: true,
-    msg: ipOrigin,
-  });
-
-});
+api.get('/config/testnet', ConfigController.testnet);
 
 export default () => api;

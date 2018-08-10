@@ -3,23 +3,25 @@ import Sequelize from 'sequelize';
 import Umzug from 'umzug';
 import path from 'path';
 
-export default async function sequelize() {
-  const sequelize = new Sequelize(
-    config.db.database,
-    config.db.user,
-    config.db.password, {
-      host: config.db.host,
-      dialect: 'postgres',
-      operatorsAliases: false,
+const sequelize = new Sequelize(
+  config.db.database,
+  config.db.user,
+  config.db.password, {
+    host: config.db.host,
+    dialect: 'postgres',
+    operatorsAliases: false,
 
-      pool: {
-        max: 5,
-        min: 0,
-        acquire: 30000,
-        idle: 10000,
-      },
+    pool: {
+      max: 5,
+      min: 0,
+      acquire: 30000,
+      idle: 10000,
+    },
 
-    });
+  });
+
+export default async function configureSequelize() {
+
 
   function sleep(ms) {
 
@@ -89,3 +91,5 @@ export default async function sequelize() {
     sequelize,
   };
 }
+
+export const instance = sequelize;
