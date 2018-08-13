@@ -8,7 +8,17 @@ export default function (sequelize, DataTypes) {
     addr: DataTypes.STRING,
     name: DataTypes.STRING,
     fullName: DataTypes.STRING,
-    decimals: DataTypes.INTEGER
+    decimals: DataTypes.INTEGER,
+    url: {
+      type: DataTypes.STRING,
+      defaultValue: '',
+      allowNull: true,
+    },
+    description: {
+      type: DataTypes.TEXT,
+      defaultValue: '',
+      allowNull: true,
+    },
   }, {});
   Token.associate = function(models) {
     // associations can be defined here

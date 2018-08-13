@@ -3,8 +3,10 @@
 module.exports = {
   up: (queryInterface, Sequelize) => {
     return queryInterface.bulkInsert('Tokens', [
-      { "addr": "0x006bea43baa3f7a6f765f14f10a1a1b08334ef45", "name": "STX", "fullName": "Stox", "decimals": 18 },
-      { "addr": "0x009e864923b49263c7f10d19b7f8ab7a9a5aad33", "name": "FKX", "fullName": "Knoxstertoken", "decimals": 18 },
+      { "addr": "0x006bea43baa3f7a6f765f14f10a1a1b08334ef45", "name": "STX", "fullName": "Stox", "decimals": 18,
+        "url": "https://www.stox.com", "description": "Stox is an open source, Bancor based prediction market platform. Using the wisdom of the crowd, every day people will be able to predict and trade the outcome of events in almost any imaginable category: Finance, sports, politics and even the weather." },
+      { "addr": "0x009e864923b49263c7f10d19b7f8ab7a9a5aad33", "name": "FKX", "fullName": "Knoxstertoken", "decimals": 18,
+        "url": "https://fortknoxster.com", "description": "FortKnoxster offers end-to-end encrypted inbox, chat, decentralized storage, calling, video conferencing, voice messages and much more." },
       { "addr": "0x00a0cbe98e4d110b0fa82646152d77babf2951d0", "name": "EETHER", "fullName": "EETHER", "decimals": 18 },
       { "addr": "0x013a06558f07d9e6f9a00c95a33f3a0e0255176b", "name": "BALI", "fullName": "BALI COIN", "decimals": 18 },
       { "addr": "0x014b50466590340d41307cc54dcee990c8d58aa8", "name": "ICOS", "fullName": "ICOS", "decimals": 6 },
