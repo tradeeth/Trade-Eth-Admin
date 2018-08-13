@@ -11,7 +11,7 @@ services:
           - .:/usr/app
           - node_modules:/usr/app/node_modules
     ports:
-          - "${BACKEND_EXPOSED_PORT:-3000}:3000"
+          - "${BACKEND_EXPOSED_PORT:-3000}:${port}"
           - "${DEBUG_EXPOSED_PORT:-56745}:56745"
   db:
     image: postgres:9.6-alpine
