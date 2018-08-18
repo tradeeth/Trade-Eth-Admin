@@ -1,10 +1,22 @@
+import Joi from 'joi';
 import db from '../models';
-import logger from '../functions/logger'
+
+export const validations = {
+  add: {
+    body: {
+      name: Joi.string().required().min(2),
+      fullName: Joi.string().required().min(2),
+      addr: Joi.string().required().min(3),
+      decimals: Joi.number().required().min(1),
+      url: Joi.string(),
+      description: Joi.string(),
+    },
+  },
+};
 
 export default class TokenController {
 
   static list(req, res) {
-    console.log(db);
     return db.Token.findAll()
       .then((results) => {
         return res.status(200).send(results);
@@ -12,6 +24,30 @@ export default class TokenController {
       .catch((err) => {
         return res.status(500).send({err: err.message});
       })
+  }
+
+  static add(req, res) {
+    const addr = req.body.addr;
+    const name = req.body.name;
+    const fullName = req.body.fullName;
+    const decimals = req.body.decimals;
+    const url = req.body.url;
+    const description = req.body.description;
+
+    // Create or update existing token
+    return db.Token.findOne({ where: { addr } })
+      .then(function(obj) {
+        const values = {
+          name,
+          fullName,
+          decimals,
+          url,
+          description
+        };
+
+        return obj ? obj.update(values) : db.Token.create(Object.assign(values, { addr }));
+      })
+      .then(() => res.sendStatus(200));
   }
 
 }

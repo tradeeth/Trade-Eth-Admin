@@ -1,5 +1,6 @@
 import morgan from 'morgan';
 import bodyParser from 'body-parser';
+import ExpressValidation from 'express-validation';
 import config from './config';
 
 export default function configureExpress(app) {
@@ -21,17 +22,32 @@ export default function configureExpress(app) {
     next();
   });
 
-  if (app.get('env') === 'development') {
-    app.use(function(err, req, res, next) {
-      res.status(err.status || 500);
-      res.render('error', {
-        message: err.message,
-        error: err,
-      });
-    });
-  }
-
   if (process.env.NODE_ENV === 'production') {
     app.enable('trust proxy');
   }
+}
+
+export function configureErrorHandling(app) {
+  // error handler
+  app.use(function(err, req, res, next) {
+    // specific for validation errors
+    if (err instanceof ExpressValidation.ValidationError) {
+      console.warn(err);
+      return res.status(err.status).json({errors: err});
+    }
+
+    console.error(err);
+    // other type of errors, it *might* also be a Runtime Error
+    // example handling
+    if (process.env.NODE_ENV !== 'production') {
+      return res.status(err.status || 500).json({
+        error: {
+          message: err.message,
+          error: err.stack,
+        },
+      });
+    } else {
+      return res.sendStatus(err.status);
+    }
+  });
 }

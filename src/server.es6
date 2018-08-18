@@ -1,9 +1,12 @@
 import express from 'express';
+import {} from 'express-async-errors';
+
 import config from './config/config';
 import logger from './functions/logger';
-import api from './routes/basic';
+import api from './routes/api';
+import application from './routes/app';
 import configureSequelize from './config/dbconfig';
-import configureExpress from './config/express.config';
+import configureExpress, { configureErrorHandling } from './config/express.config';
 
 // const passport = require('passport');
 
@@ -16,6 +19,10 @@ app.get('/', function(req, res) {
 configureExpress(app);
 
 app.use('/api', api());
+
+configureErrorHandling(app);
+
+app.use('/', application());
 
 configureSequelize().then(() => {
 
