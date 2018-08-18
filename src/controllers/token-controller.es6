@@ -4,10 +4,10 @@ import db from '../models';
 export const validations = {
   add: {
     body: {
-      name: Joi.string().required().min(2),
-      fullName: Joi.string().required().min(2),
-      addr: Joi.string().required().min(3),
-      decimals: Joi.number().required().min(1),
+      name: Joi.string().required(),
+      fullName: Joi.string().required(),
+      addr: Joi.string().required(),
+      decimals: Joi.number().required(),
       url: Joi.string(),
       description: Joi.string(),
     },

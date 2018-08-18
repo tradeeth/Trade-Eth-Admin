@@ -33,7 +33,7 @@ export function configureErrorHandling(app) {
     // specific for validation errors
     if (err instanceof ExpressValidation.ValidationError) {
       console.warn(err);
-      return res.status(err.status).json({errors: err});
+      return res.status(err.status).json(err);
     }
 
     console.error(err);

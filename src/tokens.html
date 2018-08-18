@@ -1,13 +1,85 @@
 <!DOCTYPE html>
 <html>
-<head>Token add - TradeETH</head>
+    <head>
+        <style>
+            input { width: 25em; }
+            #errors { color: red; }
+        </style>
+
+        <script type="text/javascript">
+          function toJSONString( form ) {
+            var obj = {};
+            var elements = form.querySelectorAll("input, select, textarea");
+            for (var i = 0; i < elements.length; ++i ) {
+              var element = elements[i];
+              var name = element.name;
+              var value = element.value;
+
+              if (name) {
+                obj[name] = value;
+              }
+            }
+
+            return JSON.stringify( obj );
+          }
+
+          function submitForm() {
+            var data = toJSONString(document.forms[0]);
+
+            fetch('/api/tokens/add', {
+              method: "POST",
+              body: data,
+              redirect: 'manual',
+              headers: {
+                "Content-Type": "application/json"
+              }
+            })
+              .then(response => {
+                if (response.status === 200) {
+                  alert("Success");
+                  return;
+                }
+                return response.json();
+              })
+              .then(response => {
+                if (response) {
+                  var errElement = document.getElementById('errors');
+                  errElement.innerHTML = '';
+                  var messages = response.errors.map((e) => e.messages[0]);
+                  errElement.innerHTML = messages.join("<br />");
+                }
+              });
+          }
+        </script>
+  </head>
 <body>
 
 <h1>Add new tokens for TradeETH exchange</h1>
 <h4>or update existing tokens with same address</h4>
 
-<form method="post" action="/api/addtokens">
+<br /><br />
 
+<form id="tokenForm" method="post" onsubmit="event.preventDefault(); submitForm();">
+    <p id="errors"></p>
+    Token address:<br />
+    <input type="text" name="addr" required/><br /><br />
+
+    Token name:<br />
+    <input type="text" name="fullName" required /><br /><br />
+
+    Token symbol:<br />
+    <input type="text" name="name" required /><br /><br />
+
+    Token number of decimals:<br />
+    <input type="number" name="decimals" required /><br /><br />
+
+    Web:<br />
+    <input type="text" name="url"/><br /><br />
+
+    Description:<br />
+    <textarea name="description" cols="43" rows="10"></textarea><br /><br />
+
+    <input type="submit" />
 </form>
 
 </body>
