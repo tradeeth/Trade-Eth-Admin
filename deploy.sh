@@ -27,4 +27,4 @@ docker run --rm -v /var/run/docker.sock:/var/run/docker.sock -v /etc:/etc spotif
 echo ""
 echo "---|> Restarting services"
 echo ""
-docker-compose -f docker-compose.production.yml start
+docker-compose -f docker-compose.production.yml up -d
