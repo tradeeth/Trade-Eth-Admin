@@ -1,4 +1,5 @@
 import db from '../models/index'
+import mainConfig from '../config/main.json';
 
 export default class ConfigController {
 
@@ -8,10 +9,10 @@ export default class ConfigController {
 
 
   static main(req, res) {
-    const mainConfig = require('../config/main.json');
+
     return db.Token.findAll()
       .then((results) => {
-        mainConfig.tokens = results;
+        mainConfig.tokens += results;
         return res.status(200).send(mainConfig);
       })
       .catch((err) => {
