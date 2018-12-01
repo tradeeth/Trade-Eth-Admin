@@ -5,8 +5,10 @@
 
         <script type="text/javascript">
             function createRowElement(token) {
-              return "<tr><td>" + token.addr + "</td><td>" + token.name + "</td><td>Delete</td></tr>";
+              return "<tr><td>" + token.addr + "</td><td>" + token.name + "</td>" +
+                "<td><button onclick=\"deleteToken('" + token.addr + "')\">Delete</button></td></tr>";
             }
+
           function loadTokens() {
             fetch('/api/tokens', {
               method: "GET",
@@ -30,8 +32,19 @@
               });
           }
 
-          function deleteToken() {
-
+          function deleteToken(address) {
+            fetch(`/api/tokens/${address}`, {
+              method: "DELETE",
+              redirect: 'manual',
+              headers: {
+                "Content-Type": "application/json"
+              }
+            })
+              .then(response => {
+                if (response.status === 200) {
+                  alert("Success");
+                }
+              })
           }
 
         window.addEventListener('load', function() {
