@@ -50,4 +50,21 @@ export default class TokenController {
       .then(() => res.sendStatus(200));
   }
 
+  static delete(req, res) {
+    const addr = req.params.address;
+
+    // Remove existing token
+    return db.Token.findOne({ where: { addr } })
+      .then(obj => {
+        if (!obj) {
+          return res.status(404).send('Not Found');
+        }
+        return obj
+          .destroy()
+          .then(() => res.status(200).send())
+          .catch(error => res.status(400).send(error));
+      })
+      .catch(error => res.status(500).send(error));
+  }
+
 }

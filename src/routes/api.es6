@@ -9,6 +9,7 @@ const api = Router();
 
 api.get('/tokens', TokenController.list);
 api.post('/tokens/add', validate(validations.add) ,TokenController.add);
+api.delete('/tokens/:address',TokenController.delete);
 
 api.get('/config/main', ConfigController.main);
 
