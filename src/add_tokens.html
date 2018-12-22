@@ -37,6 +37,7 @@
               .then(response => {
                 if (response.status === 200) {
                   alert("Success");
+                  document.getElementById('tokenForm').reset();
                   return;
                 }
                 return response.json();
@@ -47,8 +48,9 @@
                   errElement.innerHTML = '';
                   var messages = response.errors.map((e) => e.messages[0]);
                   errElement.innerHTML = messages.join("<br />");
+                  alert('Error, please check validation messages.');
                 }
-              });
+              })
           }
         </script>
   </head>
@@ -78,6 +80,9 @@
 
     Description:<br />
     <textarea name="description" cols="43" rows="10"></textarea><br /><br />
+
+    Secret (admin):<br />
+    <input type="text" name="secret"/><br /><br />
 
     <input type="submit" />
 </form>

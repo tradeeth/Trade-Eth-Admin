@@ -1,5 +1,6 @@
 import Joi from 'joi';
 import db from '../models';
+import config from '../config/config';
 
 export const validations = {
   add: {
@@ -27,6 +28,11 @@ export default class TokenController {
   }
 
   static add(req, res) {
+    if (!req.body.secret || req.body.secret !== config.secret) {
+      const err = { errors: [{ messages: ["Wrong secret"]}]};
+      return res.status(400).send(err);
+    }
+
     const addr = req.body.addr;
     const name = req.body.name;
     const fullName = req.body.fullName;
@@ -51,6 +57,11 @@ export default class TokenController {
   }
 
   static delete(req, res) {
+    if (!req.body.secret || req.body.secret !== config.secret) {
+      const err = { errors: [{ messages: ["Wrong secret"]}]};
+      return res.status(400).send(err);
+    }
+
     const addr = req.params.address;
 
     // Remove existing token

@@ -11,8 +11,7 @@ const config = Object.freeze({
   port: env.port || 3000,
   hostname: env.hostname || '127.0.0.1',
   clientURL: env.clientURL || '*',
-  accessToken: env.accessToken || '*',
-  secret: env.secret || 'al1bl0_l3ZBr_hWh4',
+  secret: env.secret || 'TradeETHpassword',
   db: {
     user: env.DB_USER || 'tradeth',
     password: env.DB_PASSWORD || 'tradeth',
