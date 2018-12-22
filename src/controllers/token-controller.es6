@@ -57,7 +57,7 @@ export default class TokenController {
   }
 
   static delete(req, res) {
-    if (!req.body.secret || req.body.secret !== config.secret) {
+    if (!req.headers.secret || req.headers.secret !== config.secret) {
       const err = { errors: [{ messages: ["Wrong secret"]}]};
       return res.status(400).send(err);
     }
